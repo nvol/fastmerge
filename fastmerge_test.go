@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-const N = 10000000
+const N = 20000000
 
 type testDataModel struct {
 	given    []int
@@ -48,5 +48,38 @@ func TestMergeSortIntSlice(t *testing.T) {
 
 	if !slicesAreEqual(testData.given, testData.expected) {
 		t.Errorf("Oh, no!\n%#v\n%#v\n", testData.given, testData.expected)
+	}
+
+	// other cases
+	testDataSet := []testDataModel{
+		testDataModel{
+			given:    []int{2, 6, 4},
+			expected: []int{2, 4, 6},
+		},
+		testDataModel{
+			given:    []int{},
+			expected: []int{},
+		},
+		testDataModel{
+			given:    []int{42},
+			expected: []int{42},
+		},
+		testDataModel{
+			given:    []int{-1, 0, 1, 2},
+			expected: []int{-1, 0, 1, 2},
+		},
+		testDataModel{
+			given:    []int{9, 8, 7, 6, 5, 4, 3, 2, 1},
+			expected: []int{1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
+	}
+	for ix := range testDataSet {
+		MergeSortIntSlice(testDataSet[ix].given)
+		if !slicesAreEqual(testDataSet[ix].given, testDataSet[ix].expected) {
+			t.Errorf("expected: %v\n     got:%v\n",
+				testDataSet[ix].expected,
+				testDataSet[ix].given,
+			)
+		}
 	}
 }
